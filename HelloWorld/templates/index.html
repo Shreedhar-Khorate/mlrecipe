@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Preference-Based Suggestions</title>
+</head>
+<body>
+    <h2>User Preference-Based Suggestions</h2>
+    <br><br>
+    <form action="/" method="post">
+        <label for="proteinAmount">Preferred Protein Amount:</label>
+        <input type="number" id="proteinAmount" name="proteinAmount" min="0" placeholder="e.g., 50" required />
+        <br><br>
+        
+        <label for="calories">Preferred Calories:</label>
+        <input type="number" id="calories" name="calories" min="0" placeholder="e.g., 200" required />
+        <br><br>
+        
+        <label for="Fat">Preferred Fat:</label>
+        <input type="number" id="Fat" name="fat" min="0" placeholder="e.g., 40" required />
+        <br><br>
+        
+        <label for="Carbo-Hydrates">Preferred Carbo-Hydrates:</label>
+        <input type="number" id="Carbo-Hydrates" name="Carbo-Hydrates" min="0" placeholder="e.g., 30" required />
+        <br><br>
+        
+        <label for="Sodium">Preferred Sodium:</label>
+        <input type="number" id="Sodium" name="Sodium" min="0" placeholder="e.g., 90" required />
+        <br><br>
+        
+        <label for="Fiber">Preferred Fiber:</label>
+        <input type="number" id="Fiber" name="Fiber" min="0" placeholder="e.g., 45" required />
+        <br><br>
+        
+        <label for="Cholesterol">Preferred Cholesterol:</label>
+        <input type="number" id="Cholesterol" name="Cholesterol" min="0" placeholder="e.g., 67" required />
+        <br><br>
+        
+        <label for="ingredients">Enter The Ingredients:</label>
+        <input type="text" id="ingredients" name="ingredients" placeholder="e.g., milk, eggs" required />
+        <br><br>
+
+        <button type="submit">Get Suggestions</button>
+    </form>
+
+    {% if recommendations and recommendations|length > 0 %}
+        <h2>Top Recommendations:</h2>
+        <ul>
+            {% for recipe in recommendations %}
+                <li>
+                    <h3>{{ recipe['recipe_name'] }}</h3>
+                    <img src="{{ recipe['image_url'] or 'default_image.jpg' }}" 
+                         alt="Image of {{ recipe['recipe_name'] }}" 
+                         height="200" width="200" 
+                         onerror="this.onerror=null;this.src='default_image.jpg';">
+                    <p><strong>Ingredients:</strong> {{ recipe['ingredients_list'] }}</p>
+                    <p><strong>Steps:</strong> {{ recipe['steps'] }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recommendations found. Please adjust your preferences or try again.</p>
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>
